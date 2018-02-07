@@ -1,7 +1,7 @@
 import React ,{Component} from 'react'
 import PropTypes from 'prop-types'
 
-class Comment extends Component{
+class App extends Component{
   render(){
     return(
       <div>test</div>
@@ -9,4 +9,4 @@ class Comment extends Component{
   }
 }
 
-export default Comment
+export default App

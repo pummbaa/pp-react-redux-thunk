@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+#app{
+  width:500px;
+  margin: 0 auto;
+  border:2px solid #2196f3;
+  border-radius: 5px;
+}
