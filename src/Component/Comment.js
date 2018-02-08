@@ -5,15 +5,25 @@ class Comment extends Component{
   constructor(props){
     super(props)
     this.State = {
-      timeString : ' '
+      timeString : ''
     }
   }
 
   componentWillMount(){
-    const timeString = this._updateTimeString();
-    this.setState({timeString})
+    this._updateTimeString();
+    this._timer = setInterval(
+      this._updateTimeString.bind(this),
+      5000
+    )
   }
-
+  componentWillUnmount(){
+    clearInterval(this._timer)
+  }
+  handleDelete(index){
+    if(this.props.delete){
+      this.props.delete(index)
+    }
+  }
   render(){
     const comment = this.props.comment;
 
@@ -22,6 +32,7 @@ class Comment extends Component{
           <span className="comment-username">{comment.username} :</span>
           <p className="comment-content" dangerouslySetInnerHTML={{__html:this._getProcessedContent(comment.content)}}></p>
           <span className="comment-time">{this.state.timeString}</span>
+          <span className="comment-del" onClick={this.handleDelete.bind(this,this.props.index)}>删除</span>
       </div>
     )
   }
@@ -50,7 +61,7 @@ class Comment extends Component{
       //具体时间
       timeString = new Date(comment.createTime).toLocaleDateString()
     }
-    return timeString
+    this.setState({timeString})
   }
 
   _getProcessedContent(content){

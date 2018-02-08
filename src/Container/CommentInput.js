@@ -5,8 +5,8 @@ class CommentInput extends Component{
   constructor(props){
     super(props);
     this.state = {
-      username:'',
-      content:''
+      username:' ',
+      content:' '
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleInputBlur = this.handleInputBlur.bind(this)
@@ -38,7 +38,8 @@ class CommentInput extends Component{
       return alert('请输入用户名')
     }
 
-    let comment = JSON.parse(localStorage.getItem('comment')) || []
+    let comment = localStorage.getItem('comment')
+    comment = comment ? JSON.parse(comment) : []
     comment.push({...this.state,createTime:(new Date()).getTime()})
     localStorage.setItem('comment',JSON.stringify(comment))
     this.setState({
@@ -51,19 +52,20 @@ class CommentInput extends Component{
     this.setState({username})
   }
 
+  
   render(){
     return(
       <div className="comment-input">
         <div className="comment-field">
           <span className="comment-field-name">用户名：</span>
           <div className="comment-field-input">
-            <input value={this.state.username || ' '} onChange={this.handleInputChange} onBlur={this.handleInputBlur}/>
+            <input value={this.state.username} onChange={this.handleInputChange} onBlur={this.handleInputBlur}/>
           </div>
         </div>
         <div className="comment-field">
           <span className="comment-field-name">评论内容：</span>
           <div className="comment-field-input">
-            <textarea ref={(textarea) => this.textarea = textarea} value={this.state.content || ' '} onChange={this.handleTextChange}/>
+            <textarea ref={(textarea) => this.textarea = textarea} value={this.state.content} onChange={this.handleTextChange}/>
           </div>
         </div>
         <div className="comment-field-button">
