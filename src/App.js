@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import CommentInput from './Container/CommentInput'
 import CommentList from './Container/CommentList'
 
-import './index.css'
+import './comment.less'
+
 class App extends Component{
   render(){
     return(
