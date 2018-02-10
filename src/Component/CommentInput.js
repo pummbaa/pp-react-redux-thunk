@@ -21,7 +21,9 @@ class CommentInput extends Component{
   }
 
   handleInputBlur(e){
-    localStorage.setItem('username',e.target.value)
+    if(this.props.inputBlur){
+      this.props.inputBlur(e.target.value)
+    }
   }
 
   handleTextChange(e){
@@ -31,27 +33,30 @@ class CommentInput extends Component{
   }
 
   handleSubmit(){
-    if(!this.state.content){
-      return alert('请输入评论内容')
-    }
     if(!this.state.username){
       return alert('请输入用户名')
     }
 
-    let comment = localStorage.getItem('comment')
-    comment = comment ? JSON.parse(comment) : []
-    comment.push({...this.state,createTime:(new Date()).getTime()})
-    localStorage.setItem('comment',JSON.stringify(comment))
+    if(!this.state.content){
+      return alert('请输入评论内容')
+    }
+
+    const comment = {
+      username:this.state.username,
+      content:this.state.content,
+      createTime:+new Date()
+    }
+    if(this.props.addComment){
+      this.props.addComment(comment)
+    }
     this.setState({
       content:''
     })
   }
 
   componentDidMount(){
-    const username = localStorage.getItem('username')
-    this.setState({username})
+    this.textarea.focus()
   }
-
   
   render(){
     return(
